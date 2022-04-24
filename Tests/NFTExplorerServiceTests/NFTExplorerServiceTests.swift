@@ -2,26 +2,22 @@
     @testable import NFTExplorerService
 
     final class NFTExplorerServiceTests: XCTestCase {
-        // TODO: Check the known artwork.
-        // Will i need an account? .env?
+        var knownArtworkName = ProcessInfo.processInfo.environment["TESTING_ARTWORK_NAME"]
+        var testingAccount = ProcessInfo.processInfo.environment["ETH_TESTING_ACCOUNT"]
+        var testingGRPCHost = ProcessInfo.processInfo.environment["TESTING_GRPC_HOST"]
+        var testingGRPCPort = Int(ProcessInfo.processInfo.environment["TESTING_GRPC_PORT"] ?? "50005")
         
-        var knownArtworkName = ""
-        var testingAccount = ""
         
-        func testGettingEnvironmentVariables() {
-            
-            XCTAssertEqual(testingAccount, "someaccount")
-        }
-        /*
         func testListArtworksStream() async throws {
-            let service = BaseNFTExplorerService(host: "localhost", port: 50005)
+            let service = BaseNFTExplorerService(host: testingGRPCHost!, port: testingGRPCPort!)
             
             var hasKnownArtwork = false
             
             do {
-                for try await artwork in service.streamOwnedArworks(of: testingAccount, timeoutMilis: 3000) {
+                for try await artwork in service.streamOwnedArworks(of: testingAccount!, timeoutMilis: 3000) {
                     XCTAssertNotNil(artwork)
-                    if artwork.Name == knownArtworkName {
+                    print(artwork)
+                    if artwork.name == knownArtworkName! {
                         hasKnownArtwork = true
                     }
                 }
@@ -31,9 +27,8 @@
             }
             
             if !hasKnownArtwork {
-                print("NFT Explorer Service testing account \(testingAccount) doesnt has known artwork of name \(knownArtworkName)")
+                print("NFT Explorer Service testing account \(testingAccount!) doesnt has known artwork of name \(knownArtworkName!)")
                 XCTFail()
             }
         }
-        */
     }
