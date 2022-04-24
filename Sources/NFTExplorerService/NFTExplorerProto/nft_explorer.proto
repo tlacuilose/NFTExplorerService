@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "github.com/tlacuilose/nft-explorer/presentation/grpc_servers/nft_explorer_grpc_server/nft_explorer_proto";
+
+package nft_explorer_proto;
+
+// Account represents the address of the wallet of an account
+message Account {
+    string address = 1;
+}
+
+// Artwork represents the content of a nft token.
+message Artwork {
+    string name = 1;
+    string description = 2;
+    string image_url = 3;
+}
+
+service NFTExplorer {
+    // Obtain the artworks owned by a given account.
+    rpc ListOwnedArtworks(Account) returns (stream Artwork) {}
+}
